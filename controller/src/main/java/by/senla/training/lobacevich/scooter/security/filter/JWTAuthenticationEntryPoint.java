@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,

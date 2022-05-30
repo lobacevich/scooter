@@ -1,7 +1,7 @@
 package by.senla.training.lobacevich.scooter.security;
 
 import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationFilter;
-import by.senla.training.lobacevich.scooter.security.filter.JwtAuthenticationEntryPoint;
+import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationEntryPoint;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
