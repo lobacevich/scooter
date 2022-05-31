@@ -4,6 +4,7 @@ import by.senla.training.lobacevich.scooter.dto.LoginRequest;
 import by.senla.training.lobacevich.scooter.dto.SignupRequest;
 import by.senla.training.lobacevich.scooter.security.JWTTokenProvider;
 import by.senla.training.lobacevich.scooter.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,15 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
 public class AuthController {
 
     public static final String TOKEN_PREFIX = "Bearer ";
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private JWTTokenProvider jwtTokenProvider;
+
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final JWTTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
     public String registerUser(@RequestBody SignupRequest signupRequest) {

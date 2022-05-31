@@ -2,12 +2,13 @@ package by.senla.training.lobacevich.scooter.security.filter;
 
 import by.senla.training.lobacevich.scooter.security.JWTTokenProvider;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,15 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
+@AllArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     public static final Logger LOG = LogManager.getLogger();
     public static final String HEADER_STRING = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
-    @Autowired
-    private JWTTokenProvider jwtTokenProvider;
-    @Autowired
-    private UserDetailsServiceImpl userService;
+
+    private final JWTTokenProvider jwtTokenProvider;
+    private final UserDetailsServiceImpl userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

@@ -3,7 +3,7 @@ package by.senla.training.lobacevich.scooter.security;
 import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationFilter;
 import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationEntryPoint;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, proxyTargetClass = true)
+@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -42,12 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public JWTAuthenticationFilter jwtAuthenticationFilter() {
-        return new JWTAuthenticationFilter();
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

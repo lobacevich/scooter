@@ -2,7 +2,7 @@ package by.senla.training.lobacevich.scooter.service.impl;
 
 import by.senla.training.lobacevich.scooter.dto.SignupRequest;
 import by.senla.training.lobacevich.scooter.entity.User;
-import by.senla.training.lobacevich.scooter.entity.UserRole;
+import by.senla.training.lobacevich.scooter.entity.ERole;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         user.setLastname(userIn.getLastname());
         user.setEmail(userIn.getEmail());
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
-        user.getRoles().add(UserRole.ROLE_USER);
+        user.getRoles().add(ERole.ROLE_USER);
         return userRepository.save(user);
     }
 }

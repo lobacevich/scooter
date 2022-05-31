@@ -26,7 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.name()))
+                return user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.name()))
                         .collect(Collectors.toList());
             }
 
@@ -38,22 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             @Override
             public String getUsername() {
                 return user.getUsername();
-            }
-
-            public Long getId() {
-                return user.getId();
-            }
-
-            public String getFirstname() {
-                return user.getFirstname();
-            }
-
-            public String getLastname() {
-                return user.getLastname();
-            }
-
-            public String getEmail() {
-                return user.getEmail();
             }
 
             @Override

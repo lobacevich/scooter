@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,8 +28,12 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ElementCollection(targetClass = UserRole.class)
+    @ElementCollection(targetClass = ERole.class)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
-    private Set<UserRole> roles = new HashSet<>();
+    private Set<ERole> roles = new HashSet<>();
+    @OneToOne
+    private SeasonTicket seasonTicket;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<OrderRent> orders;
 }
