@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,18 +22,20 @@ public class OrderRent {
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Scooter scooter;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Point startPoint;
     @Enumerated(EnumType.STRING)
-    private StatusOrder status;
+    private OrderStatus status;
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm")
     @Column(nullable = false)
     private LocalDateTime createdDate;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Point endPoint;
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm")
     @Column
     private LocalDateTime closedDate;
-    @Column
+    @Column(nullable = false)
     private Double mileage;
+    @Column
+    private BigDecimal totalPrice;
 }

@@ -6,21 +6,16 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class SeasonTicket {
+public class Tariff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private BigDecimal price;
-    @Column(nullable = false)
-    private LocalDateTime expirationDate;
-    @Column(nullable = false)
-    private Integer monthsValid;
+    private BigDecimal pricePerHour;
 }

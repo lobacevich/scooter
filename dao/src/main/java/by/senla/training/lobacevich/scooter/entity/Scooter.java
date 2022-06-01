@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Getter
@@ -17,12 +15,10 @@ public class Scooter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String model;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Point point;
-    @Column(nullable = false)
-    private BigDecimal pricePerHour;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<OrderRent> orders;
+    private Tariff tariff;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ScooterModel model;
+    @Enumerated(EnumType.STRING)
+    private ScooterStatus status;
 }

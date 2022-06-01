@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.entity.ERole;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,9 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return user.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.name()))
-                        .collect(Collectors.toList());
+                List<GrantedAuthority> authorityList = new ArrayList<>();
+                authorityList.add(new SimpleGrantedAuthority(ERole.ROLE_USER.name()));
+                if (user.getRole() == ERole.ROLE_ADMIN) {
+                    authorityList.add(new SimpleGrantedAuthority(ERole.ROLE_ADMIN.name()));
+                }
+                return authorityList;
             }
 
             @Override

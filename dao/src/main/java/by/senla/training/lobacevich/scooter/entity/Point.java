@@ -16,7 +16,7 @@ public class Point {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private String location;
     @Column(nullable = false)
     private Integer latitude;

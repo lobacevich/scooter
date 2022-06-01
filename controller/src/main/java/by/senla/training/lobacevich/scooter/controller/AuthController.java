@@ -1,11 +1,11 @@
 package by.senla.training.lobacevich.scooter.controller;
 
-import by.senla.training.lobacevich.scooter.dto.LoginRequest;
-import by.senla.training.lobacevich.scooter.dto.SignupRequest;
+import by.senla.training.lobacevich.scooter.UserException;
+import by.senla.training.lobacevich.scooter.dto.request.LoginRequest;
+import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.security.JWTTokenProvider;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ public class AuthController {
     private final JWTTokenProvider jwtTokenProvider;
 
     @PostMapping("/signup")
-    public String registerUser(@RequestBody SignupRequest signupRequest) {
+    public String registerUser(@RequestBody SignupRequest signupRequest) throws UserException {
         userService.createUser(signupRequest);
         return "User registered successfully!";
     }
