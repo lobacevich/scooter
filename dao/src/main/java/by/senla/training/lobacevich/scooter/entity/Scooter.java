@@ -21,4 +21,10 @@ public class Scooter {
     private ScooterModel model;
     @Enumerated(EnumType.STRING)
     private ScooterStatus status;
+
+    public Scooter(Tariff tariff, ScooterModel model, ScooterStatus status) {
+        this.tariff = tariff;
+        this.model = model;
+        this.status = status;
+    }
 }

@@ -40,16 +40,16 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
         user.setRole(ERole.ROLE_USER);
         try {
-            return userMapper.userToUserDto(userRepository.save(user));
+            return userMapper.userToDto(userRepository.save(user));
         } catch (Exception e) {
-            LOG.error("Error during registration. {}", e.getMessage());
-            throw new UserException("Unable to create user");
+            LOG.error("Error during user registration. {}", e.getMessage());
+            throw new UserException("User with the same username already exists");
         }
     }
 
     @Override
     public UserDto getCurrentUser(Principal principal) throws UserException {
-        return userMapper.userToUserDto(getUserByPrincipal(principal));
+        return userMapper.userToDto(getUserByPrincipal(principal));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstname(userDto.getFirstname());
         user.setLastname(userDto.getLastname());
         user.setEmail(userDto.getEmail());
-        return userMapper.userToUserDto(userRepository.save(user));
+        return userMapper.userToDto(userRepository.save(user));
     }
 
     private User getUserByPrincipal(Principal principal) throws UserException {

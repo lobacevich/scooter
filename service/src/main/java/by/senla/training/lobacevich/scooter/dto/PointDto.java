@@ -13,9 +13,10 @@ public class PointDto {
     @NotBlank
     private String location;
     @Min(value = 0, message = "Latitude cannot be less than 0")
-    @Max(value = 100, message = "Latitude cannot be more than 0")
+    @Max(value = 100, message = "Latitude cannot be more than 100")
     private Integer latitude;
-
+    @Min(value = 0, message = "longitude cannot be less than 0")
+    @Max(value = 100, message = "longitude cannot be more than 100")
     private Integer longitude;
     private Double distance;
 }

@@ -24,4 +24,10 @@ public class Point {
     private Integer longitude;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Scooter> scooters;
+
+    public Point(String location, Integer latitude, Integer longitude) {
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }
