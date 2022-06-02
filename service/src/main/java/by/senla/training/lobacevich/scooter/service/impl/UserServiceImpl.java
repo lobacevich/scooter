@@ -4,7 +4,7 @@ import by.senla.training.lobacevich.scooter.UserException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.entity.User;
-import by.senla.training.lobacevich.scooter.entity.ERole;
+import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.mapper.UserMapper;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;

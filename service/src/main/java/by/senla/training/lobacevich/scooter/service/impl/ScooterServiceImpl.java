@@ -4,7 +4,7 @@ import by.senla.training.lobacevich.scooter.ScooterException;
 import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.entity.Scooter;
 import by.senla.training.lobacevich.scooter.entity.ScooterModel;
-import by.senla.training.lobacevich.scooter.entity.ScooterStatus;
+import by.senla.training.lobacevich.scooter.entity.enums.ScooterStatus;
 import by.senla.training.lobacevich.scooter.entity.Tariff;
 import by.senla.training.lobacevich.scooter.mapper.ScooterMapper;
 import by.senla.training.lobacevich.scooter.repository.ScooterModelRepository;

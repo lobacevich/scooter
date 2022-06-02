@@ -17,8 +17,8 @@ import java.util.Map;
 public class JWTTokenProvider {
 
     public static final Logger LOG = LogManager.getLogger();
-    public static final String SECRET = "SecretKey";
-    public static final long EXPIRATION_TIME = 9_000_000;
+    private static final String SECRET = "SecretKey";
+    private static final int EXPIRATION_TIME = 900_000;
 
     public String generateToken(Authentication authentication) {
         UserDetails user = (UserDetails) authentication.getPrincipal();

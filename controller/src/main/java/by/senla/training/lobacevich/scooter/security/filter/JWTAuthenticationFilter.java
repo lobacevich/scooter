@@ -5,7 +5,7 @@ import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -37,8 +37,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
                 String username = jwtTokenProvider.getUsernameFromToken(token);
                 UserDetails user = userService.loadUserByUsername(username);
-                RememberMeAuthenticationToken authToken = new RememberMeAuthenticationToken(
-                        token, user, null);
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user,
+                        null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {

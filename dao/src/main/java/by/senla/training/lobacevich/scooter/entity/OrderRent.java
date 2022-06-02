@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.entity;
 
+import by.senla.training.lobacevich.scooter.entity.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

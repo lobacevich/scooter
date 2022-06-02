@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.entity;
 
+import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

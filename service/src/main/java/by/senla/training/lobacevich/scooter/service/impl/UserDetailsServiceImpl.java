@@ -1,6 +1,6 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
-import by.senla.training.lobacevich.scooter.entity.ERole;
+import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
