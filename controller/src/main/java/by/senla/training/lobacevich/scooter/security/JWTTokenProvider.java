@@ -18,7 +18,7 @@ public class JWTTokenProvider {
 
     public static final Logger LOG = LogManager.getLogger();
     private static final String SECRET = "SecretKey";
-    private static final int EXPIRATION_TIME = 900_000;
+    private static final int EXPIRATION_TIME = 900_00000;
 
     public String generateToken(Authentication authentication) {
         UserDetails user = (UserDetails) authentication.getPrincipal();

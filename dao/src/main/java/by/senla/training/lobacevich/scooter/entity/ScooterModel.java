@@ -16,5 +16,15 @@ public class ScooterModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String model;
+    private String name;
+    @Column(nullable = false)
+    private Integer maxSpeed;
+    @Column(nullable = false)
+    private Integer batteryChargeKm;
+
+    public ScooterModel(String name, Integer maxSpeed, Integer batteryChargeKm) {
+        this.name = name;
+        this.maxSpeed = maxSpeed;
+        this.batteryChargeKm = batteryChargeKm;
+    }
 }

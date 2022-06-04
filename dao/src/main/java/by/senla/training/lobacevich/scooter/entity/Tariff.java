@@ -16,6 +16,13 @@ public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ScooterModel model;
     @Column(nullable = false)
     private BigDecimal pricePerHour;
+
+    public Tariff(ScooterModel model, BigDecimal pricePerHour) {
+        this.model = model;
+        this.pricePerHour = pricePerHour;
+    }
 }

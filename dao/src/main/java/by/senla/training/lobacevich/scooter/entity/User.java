@@ -30,4 +30,6 @@ public class User {
     private ERole role;
     @OneToOne
     private SeasonTicket seasonTicket;
+    @OneToOne
+    private DiscountCard discountCard;
 }

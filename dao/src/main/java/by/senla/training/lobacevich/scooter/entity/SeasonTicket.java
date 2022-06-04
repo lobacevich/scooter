@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +21,13 @@ public class SeasonTicket {
     @Column(nullable = false)
     private BigDecimal price;
     @Column(nullable = false)
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
     @Column(nullable = false)
     private Integer monthsValid;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ScooterModel model;
+
+    public SeasonTicket(ScooterModel model) {
+        this.model = model;
+    }
 }

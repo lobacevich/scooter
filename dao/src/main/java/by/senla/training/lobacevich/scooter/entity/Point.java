@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,8 +21,6 @@ public class Point {
     private Integer latitude;
     @Column(nullable = false)
     private Integer longitude;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Scooter> scooters;
 
     public Point(String location, Integer latitude, Integer longitude) {
         this.location = location;

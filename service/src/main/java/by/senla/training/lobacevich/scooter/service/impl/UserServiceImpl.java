@@ -1,11 +1,17 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.UserException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
+import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
+import by.senla.training.lobacevich.scooter.entity.DiscountCard;
+import by.senla.training.lobacevich.scooter.entity.ScooterModel;
+import by.senla.training.lobacevich.scooter.entity.SeasonTicket;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.mapper.UserMapper;
+import by.senla.training.lobacevich.scooter.repository.ScooterModelRepository;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
@@ -24,10 +30,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final ScooterModelRepository scooterModelRepository;
 
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public User findUserById(Long id) throws NotFoundException {
+        return userRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Incorrect user id"));
     }
 
     @Override
@@ -48,12 +56,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getCurrentUser(Principal principal) throws UserException {
+    public UserDto getCurrentUser(Principal principal) throws NotFoundException {
         return userMapper.userToDto(getUserByPrincipal(principal));
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, Principal principal) throws UserException {
+    public UserDto updateUser(UserDto userDto, Principal principal) throws NotFoundException {
         User user = getUserByPrincipal(principal);
         user.setFirstname(userDto.getFirstname());
         user.setLastname(userDto.getLastname());
@@ -61,9 +69,27 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToDto(userRepository.save(user));
     }
 
-    private User getUserByPrincipal(Principal principal) throws UserException {
+    @Override
+    public User getUserByPrincipal(Principal principal) throws NotFoundException {
         String username = principal.getName();
         return userRepository.findByUsername(username).orElseThrow(() ->
-                new UserException("User not found with username " + username));
+                new NotFoundException("User not found with username " + username));
     }
+
+    @Override
+    public MessageResponse giveDiscountCard(int discount, Long userId) throws NotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new NotFoundException("Incorrect user's id"));
+        user.setDiscountCard(new DiscountCard(discount));
+        return new MessageResponse("Discount card was added successfully");
+    }
+
+    @Override
+    public MessageResponse byuSeasonTicket(ScooterModel model, Principal principal) throws NotFoundException {
+        User user = getUserByPrincipal(principal);
+        user.setSeasonTicket(new SeasonTicket(model));
+        return new MessageResponse("Season ticket was added successfully");
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package by.senla.training.lobacevich.scooter.entity;
 
 import by.senla.training.lobacevich.scooter.entity.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,16 +26,24 @@ public class OrderRent {
     private Point startPoint;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    @JsonFormat(pattern = "yyyy-mm-dd HH:mm")
     @Column(nullable = false)
     private LocalDateTime createdDate;
     @ManyToOne(fetch = FetchType.LAZY)
     private Point endPoint;
-    @JsonFormat(pattern = "yyyy-mm-dd HH:mm")
     @Column
     private LocalDateTime closedDate;
-    @Column(nullable = false)
+    @Column
     private Double mileage;
     @Column
-    private BigDecimal totalPrice;
+    private BigDecimal totalCost;
+    @Column(nullable = false)
+    private Boolean bySeasonTicket;
+
+
+    public OrderRent(User user, Scooter scooter, Point startPoint, LocalDateTime createdDate) {
+        this.user = user;
+        this.scooter = scooter;
+        this.startPoint = startPoint;
+        this.createdDate = createdDate;
+    }
 }
