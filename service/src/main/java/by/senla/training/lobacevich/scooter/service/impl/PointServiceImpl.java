@@ -4,11 +4,13 @@ import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.PointDto;
 import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
+import by.senla.training.lobacevich.scooter.entity.City;
 import by.senla.training.lobacevich.scooter.entity.Point;
 import by.senla.training.lobacevich.scooter.mapper.PointMapper;
 import by.senla.training.lobacevich.scooter.mapper.ScooterMapper;
 import by.senla.training.lobacevich.scooter.repository.PointRepository;
 import by.senla.training.lobacevich.scooter.repository.ScooterRepository;
+import by.senla.training.lobacevich.scooter.service.CityService;
 import by.senla.training.lobacevich.scooter.service.PointService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class PointServiceImpl implements PointService {
     private final PointMapper pointMapper;
     private final ScooterRepository scooterRepository;
     private final ScooterMapper scooterMapper;
+    private final CityService cityService;
 
     @Override
     public Point getById(Long id) throws NotFoundException {
@@ -33,8 +36,9 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto createPoint(PointDto pointDto) {
-        Point point = new Point(pointDto.getLocation(), pointDto.getLatitude(), pointDto.getLongitude());
+    public PointDto createPoint(PointDto pointDto) throws NotFoundException {
+        City city = cityService.getById(pointDto.getId());
+        Point point = new Point(pointDto.getAddress(), pointDto.getLatitude(), pointDto.getLongitude(), city);
         return pointMapper.pointToDto(pointRepository.save(point));
     }
 
@@ -47,7 +51,7 @@ public class PointServiceImpl implements PointService {
     @Override
     public PointDto updatePoint(Long id, PointDto pointDto) throws NotFoundException {
         Point point = getById(id);
-        point.setLocation(pointDto.getLocation());
+        point.setAddress(pointDto.getAddress());
         point.setLatitude(pointDto.getLatitude());
         point.setLongitude(pointDto.getLongitude());
         return pointMapper.pointToDto(pointRepository.save(point));

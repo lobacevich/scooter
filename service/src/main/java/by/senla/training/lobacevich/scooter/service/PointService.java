@@ -12,7 +12,7 @@ public interface PointService {
 
     Point getById(Long id) throws NotFoundException;
 
-    PointDto createPoint(PointDto pointDto);
+    PointDto createPoint(PointDto pointDto) throws NotFoundException;
 
     MessageResponse deletePoint(Long id);
 

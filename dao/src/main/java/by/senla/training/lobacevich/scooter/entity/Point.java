@@ -16,15 +16,20 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String location;
+    private String address;
+    @Column(nullable = false)
+    private String PhoneNumber;
     @Column(nullable = false)
     private Integer latitude;
     @Column(nullable = false)
     private Integer longitude;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private City city;
 
-    public Point(String location, Integer latitude, Integer longitude) {
-        this.location = location;
+    public Point(String address, Integer latitude, Integer longitude, City city) {
+        this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.city = city;
     }
 }

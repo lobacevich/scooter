@@ -6,6 +6,7 @@ import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.entity.Point;
 import by.senla.training.lobacevich.scooter.entity.Scooter;
 import by.senla.training.lobacevich.scooter.entity.ScooterModel;
+import by.senla.training.lobacevich.scooter.entity.enums.ScooterStatus;
 import by.senla.training.lobacevich.scooter.mapper.ScooterMapper;
 import by.senla.training.lobacevich.scooter.repository.ScooterRepository;
 import by.senla.training.lobacevich.scooter.service.PointService;
@@ -44,6 +45,8 @@ public class ScooterServiceImpl implements ScooterService {
         ScooterModel model = scooterModelService.getById(scooterDto.getModelId());
         Point point = pointService.getById(scooterDto.getPointId());
         Scooter scooter = new Scooter(model, point);
+        scooter.setMileage(0.0);
+        scooter.setStatus(ScooterStatus.VACANT);
         return scooterMapper.scooterToDto(scooterRepository.save(scooter));
     }
 

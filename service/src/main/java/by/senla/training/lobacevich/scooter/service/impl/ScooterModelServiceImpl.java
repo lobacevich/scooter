@@ -28,7 +28,7 @@ public class ScooterModelServiceImpl implements ScooterModelService {
     @Override
     public ScooterModelDto createModel(ScooterModelDto modelDto) {
         ScooterModel model = new ScooterModel(modelDto.getName(),modelDto.getMaxSpeed(),
-                modelDto.getBatteryChargeKm());
+                modelDto.getPowerReserveKm());
         return scooterModelMapper.scooterModelToDto(scooterModelRepository.save(model));
     }
 
@@ -37,7 +37,7 @@ public class ScooterModelServiceImpl implements ScooterModelService {
         ScooterModel model = getById(id);
         model.setName(modelDto.getName());
         model.setMaxSpeed(modelDto.getMaxSpeed());
-        model.setBatteryChargeKm(modelDto.getBatteryChargeKm());
+        model.setPowerReserveKm(modelDto.getPowerReserveKm());
         return scooterModelMapper.scooterModelToDto(scooterModelRepository.save(model));
     }
 

@@ -27,8 +27,6 @@ public class Scooter {
 
     public Scooter(ScooterModel model, Point point) {
         this.model = model;
-        this.status = ScooterStatus.VACANT;
         this.point = point;
-        this.mileage = 0.0;
     }
 }

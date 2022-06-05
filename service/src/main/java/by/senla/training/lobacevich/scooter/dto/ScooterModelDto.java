@@ -13,6 +13,6 @@ public class ScooterModelDto {
     private String name;
     @NotNull(message = "Max speed is required")
     private Integer maxSpeed;
-    @NotNull(message = "Battery charge value is required")
-    private Integer batteryChargeKm;
+    @NotNull(message = "Power reserve is required")
+    private Integer powerReserveKm;
 }

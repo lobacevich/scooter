@@ -12,7 +12,7 @@ public class ScooterModelMapper {
         scooterModelDto.setId(model.getId());
         scooterModelDto.setName(model.getName());
         scooterModelDto.setMaxSpeed(model.getMaxSpeed());
-        scooterModelDto.setBatteryChargeKm(model.getBatteryChargeKm());
+        scooterModelDto.setPowerReserveKm(model.getPowerReserveKm());
         return scooterModelDto;
     }
 }

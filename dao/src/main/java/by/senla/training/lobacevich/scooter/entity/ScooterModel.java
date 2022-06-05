@@ -20,11 +20,11 @@ public class ScooterModel {
     @Column(nullable = false)
     private Integer maxSpeed;
     @Column(nullable = false)
-    private Integer batteryChargeKm;
+    private Integer powerReserveKm;
 
-    public ScooterModel(String name, Integer maxSpeed, Integer batteryChargeKm) {
+    public ScooterModel(String name, Integer maxSpeed, Integer powerReserveKm) {
         this.name = name;
         this.maxSpeed = maxSpeed;
-        this.batteryChargeKm = batteryChargeKm;
+        this.powerReserveKm = powerReserveKm;
     }
 }
