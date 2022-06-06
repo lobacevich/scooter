@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,13 +18,15 @@ import java.util.Map;
 public class JWTTokenProvider {
 
     public static final Logger LOG = LogManager.getLogger();
-    private static final String SECRET = "SecretKey";
-    private static final int EXPIRATION_TIME = 900_00000;
+    @Value("${JWTTokenProvider.secret:secretKey}")
+    private String secretKey;
+    @Value("${JWTTokenProvider.expirationTime:900000}")
+    private int expirationTime;
 
     public String generateToken(Authentication authentication) {
         UserDetails user = (UserDetails) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
-        Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
+        Date expiryDate = new Date(now.getTime() + expirationTime);
         String username = user.getUsername();
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("username", user.getUsername());
@@ -33,14 +36,14 @@ public class JWTTokenProvider {
                 .addClaims(claimsMap)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(SECRET)
+                    .setSigningKey(secretKey)
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
@@ -51,7 +54,7 @@ public class JWTTokenProvider {
 
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
         return (String) claims.get("username");

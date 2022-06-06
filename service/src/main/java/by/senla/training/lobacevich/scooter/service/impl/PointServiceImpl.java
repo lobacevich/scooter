@@ -69,7 +69,7 @@ public class PointServiceImpl implements PointService {
                 .collect(Collectors.toList());
     }
 
-    private double calculDistance(Integer latitude, Integer longitude, PointDto point) {
+    private double calculateDistance(Integer latitude, Integer longitude, PointDto point) {
         return Math.sqrt((Math.pow(latitude - point.getLatitude(), 2) +
                 Math.pow(longitude - point.getLongitude(), 2)));
     }
@@ -82,7 +82,7 @@ public class PointServiceImpl implements PointService {
         if (latitude == null || longitude == null) {
             return pointDtoList;
         }
-        pointDtoList.forEach(x -> x.setDistance(calculDistance(latitude, longitude, x)));
+        pointDtoList.forEach(x -> x.setDistance(calculateDistance(latitude, longitude, x)));
         pointDtoList.sort(Comparator.comparing(PointDto::getDistance));
         return pointDtoList;
     }

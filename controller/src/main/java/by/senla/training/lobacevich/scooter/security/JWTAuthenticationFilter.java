@@ -1,6 +1,5 @@
-package by.senla.training.lobacevich.scooter.security.filter;
+package by.senla.training.lobacevich.scooter.security;
 
-import by.senla.training.lobacevich.scooter.security.JWTTokenProvider;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;

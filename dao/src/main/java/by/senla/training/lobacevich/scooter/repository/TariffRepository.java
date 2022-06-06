@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface TariffRepository extends JpaRepository<Tariff, Long> {
 
     Optional<Tariff> findByModel_Id(Long modelId);
+
+    Boolean existsByModel_Id(Long id);
 }

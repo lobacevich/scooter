@@ -65,11 +65,4 @@ public class ScooterServiceImpl implements ScooterService {
         scooter.setPoint(point);
         return scooterMapper.scooterToDto(scooterRepository.save(scooter));
     }
-
-    @Override
-    public List<ScooterDto> getScootersByPointId(Long pointId) {
-        return scooterRepository.findScootersByPointId(pointId).stream()
-                .map(scooterMapper::scooterToDto)
-                .collect(Collectors.toList());
-    }
 }

@@ -12,9 +12,8 @@ public class ScooterMapper {
         scooterDto.setId(scooter.getId());
         scooterDto.setModelId(scooter.getModel().getId());
         scooterDto.setStatus(scooter.getStatus().name());
-        if (scooter.getPoint() != null) {
-            scooterDto.setPointId(scooter.getPoint().getId());
-        }
+        scooterDto.setPointId(scooter.getPoint() == null ? null :
+                scooter.getPoint().getId());
         scooterDto.setMileage(scooter.getMileage());
         return scooterDto;
     }

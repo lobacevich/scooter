@@ -1,7 +1,5 @@
 package by.senla.training.lobacevich.scooter.security;
 
-import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationFilter;
-import by.senla.training.lobacevich.scooter.security.filter.JWTAuthenticationEntryPoint;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

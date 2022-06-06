@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.controller;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.TariffDto;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
@@ -28,7 +29,7 @@ public class TariffController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Object createTariff(@Valid @RequestBody TariffDto tariffDto,
-                               BindingResult bindingResult) throws NotFoundException {
+                               BindingResult bindingResult) throws NotFoundException, CreationException {
         if (bindingResult.hasErrors()) {
             return validationErrorResponse.getErrors(bindingResult);
         }

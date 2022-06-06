@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.TariffDto;
 import by.senla.training.lobacevich.scooter.entity.ScooterModel;
@@ -29,7 +30,10 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public TariffDto createTariff(TariffDto tariffDto) throws NotFoundException {
+    public TariffDto createTariff(TariffDto tariffDto) throws NotFoundException, CreationException {
+        if (tariffRepository.existsByModel_Id(tariffDto.getModelId())) {
+            throw new CreationException("Tariff for this model already exists");
+        }
         ScooterModel model = scooterModelService.getById(tariffDto.getModelId());
         Tariff tariff = new Tariff(model, tariffDto.getPricePerFirstHour(), tariffDto.getPricePerNextHour(),
                 tariffDto.getPricePerFirstDay(), tariffDto.getPricePerNextDay());

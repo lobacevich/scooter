@@ -1,7 +1,7 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
-import by.senla.training.lobacevich.scooter.UserException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(SignupRequest userIn) throws UserException {
+    public UserDto createUser(SignupRequest userIn) throws CreationException {
         User user = new User();
         user.setUsername(userIn.getUsername());
         user.setFirstname(userIn.getFirstname());
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
             return userMapper.userToDto(userRepository.save(user));
         } catch (Exception e) {
             LOG.error("Error during user registration. {}", e.getMessage());
-            throw new UserException("User with the same username or email already exists");
+            throw new CreationException("User with the same username or email already exists");
         }
     }
 

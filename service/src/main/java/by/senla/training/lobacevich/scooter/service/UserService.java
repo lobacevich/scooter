@@ -1,7 +1,7 @@
 package by.senla.training.lobacevich.scooter.service;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
-import by.senla.training.lobacevich.scooter.UserException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -13,7 +13,7 @@ public interface UserService {
 
     User findUserById(Long id) throws NotFoundException;
 
-    UserDto createUser(SignupRequest userIn) throws UserException;
+    UserDto createUser(SignupRequest userIn) throws CreationException;
 
     UserDto updateUser(UserDto userDto, Principal principal) throws NotFoundException;
 

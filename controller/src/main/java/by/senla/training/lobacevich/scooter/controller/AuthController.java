@@ -1,6 +1,6 @@
 package by.senla.training.lobacevich.scooter.controller;
 
-import by.senla.training.lobacevich.scooter.UserException;
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.dto.request.LoginRequest;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -34,7 +34,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public Object registerUser(@Valid @RequestBody SignupRequest signupRequest,
-                               BindingResult bindingResult) throws UserException {
+                               BindingResult bindingResult) throws CreationException {
         if (bindingResult.hasErrors()) {
             return validationErrorResponse.getErrors(bindingResult);
         }

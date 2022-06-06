@@ -1,7 +1,6 @@
 package by.senla.training.lobacevich.scooter.service;
 
 import by.senla.training.lobacevich.scooter.NotFoundException;
-import by.senla.training.lobacevich.scooter.ScooterException;
 import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.entity.Scooter;
@@ -16,9 +15,7 @@ public interface ScooterService {
 
     ScooterDto createScooter(ScooterDto scooterDto) throws NotFoundException;
 
-    MessageResponse deleteScooter(Long id) throws ScooterException;
+    MessageResponse deleteScooter(Long id);
 
     ScooterDto updateScooter(Long id, ScooterDto scooterDto) throws NotFoundException;
-
-    List<ScooterDto> getScootersByPointId(Long pointId);
 }

@@ -1,7 +1,6 @@
 package by.senla.training.lobacevich.scooter.controller;
 
 import by.senla.training.lobacevich.scooter.NotFoundException;
-import by.senla.training.lobacevich.scooter.ScooterException;
 import by.senla.training.lobacevich.scooter.dto.OrderRentDto;
 import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -52,7 +51,7 @@ public class ScooterController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public MessageResponse deleteScooter(@PathVariable("id") Long id) throws ScooterException {
+    public MessageResponse deleteScooter(@PathVariable("id") Long id) {
         return scooterService.deleteScooter(id);
     }
 
