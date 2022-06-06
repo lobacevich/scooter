@@ -18,17 +18,17 @@ public class OrderRent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Scooter scooter;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Point startPoint;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @Column(nullable = false)
     private LocalDateTime createdDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Point endPoint;
     @Column
     private LocalDateTime closedDate;
@@ -36,9 +36,6 @@ public class OrderRent {
     private Double mileage;
     @Column
     private BigDecimal totalCost;
-    @Column(nullable = false)
-    private Boolean bySeasonTicket;
-
 
     public OrderRent(User user, Scooter scooter, Point startPoint, LocalDateTime createdDate) {
         this.user = user;

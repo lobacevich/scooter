@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderRentService {
 
-    Object openRent(Principal principal, Long scooterId, Boolean bySeasonTicket) throws NotFoundException;
+    Object openRent(Principal principal, Long scooterId) throws NotFoundException;
 
     OrderRentDto closeRent(Principal principal, Long endPointId, Double mileage) throws NotFoundException;
 

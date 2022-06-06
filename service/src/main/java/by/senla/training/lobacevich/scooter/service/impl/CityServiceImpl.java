@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.CityException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.CityDto;
 import by.senla.training.lobacevich.scooter.dto.PointDto;
@@ -38,8 +39,12 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityDto createCity(CityDto cityDto) {
-        return cityMapper.cityToDto(cityRepository.save(new City(cityDto.getName())));
+    public CityDto createCity(CityDto cityDto) throws CityException {
+        try {
+            return cityMapper.cityToDto(cityRepository.save(new City(cityDto.getName())));
+        } catch (Exception e) {
+            throw new CityException("City with that name already exists");
+        }
     }
 
     @Override

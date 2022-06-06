@@ -11,6 +11,13 @@ public class TariffDto {
     private Long id;
     @NotNull(message = "Model id is required")
     private Long modelId;
-    @NotNull(message = "Price is required")
-    private BigDecimal pricePerHour;
+    private String modelName;
+    @NotNull(message = "Price per first hour is required")
+    private BigDecimal pricePerFirstHour;
+    @NotNull(message = "Price per next hour is required")
+    private BigDecimal pricePerNextHour;
+    @NotNull(message = "Price per first day is required")
+    private BigDecimal pricePerFirstDay;
+    @NotNull(message = "Price per next day is required")
+    private BigDecimal pricePerNextDay;
 }

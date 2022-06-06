@@ -29,7 +29,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ERole role;
     @OneToOne
-    private SeasonTicket seasonTicket;
-    @OneToOne
     private DiscountCard discountCard;
 }

@@ -21,9 +21,8 @@ public class OrderRentController {
 
     @PostMapping("/scooter/{id}")
     public Object rentScooter(@PathVariable("id") Long scooterId,
-                              @RequestParam(value = "byTicket", required = false) Boolean bySeasonTicket,
                               Principal principal) throws NotFoundException {
-        return orderRentService.openRent(principal, scooterId, bySeasonTicket);
+        return orderRentService.openRent(principal, scooterId);
     }
 
     @PostMapping("/close")
@@ -43,11 +42,5 @@ public class OrderRentController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<OrderRentDto> getClosedOrders() {
         return orderRentService.getClosedOrders();
-    }
-
-    @GetMapping("/scooter/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<OrderRentDto> getOrdersByScooterId(@PathVariable("id") Long scooterId) {
-        return orderRentService.getOrdersByScooterId(scooterId);
     }
 }

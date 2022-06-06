@@ -6,12 +6,10 @@ import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.entity.DiscountCard;
-import by.senla.training.lobacevich.scooter.entity.ScooterModel;
-import by.senla.training.lobacevich.scooter.entity.SeasonTicket;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.mapper.UserMapper;
-import by.senla.training.lobacevich.scooter.repository.ScooterModelRepository;
+import by.senla.training.lobacevich.scooter.repository.DiscountCardRepository;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
@@ -30,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private final ScooterModelRepository scooterModelRepository;
+    private final DiscountCardRepository discountCardRepository;
 
     @Override
     public User findUserById(Long id) throws NotFoundException {
@@ -51,7 +49,7 @@ public class UserServiceImpl implements UserService {
             return userMapper.userToDto(userRepository.save(user));
         } catch (Exception e) {
             LOG.error("Error during user registration. {}", e.getMessage());
-            throw new UserException("User with the same username already exists");
+            throw new UserException("User with the same username or email already exists");
         }
     }
 
@@ -77,19 +75,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MessageResponse giveDiscountCard(int discount, Long userId) throws NotFoundException {
+    public MessageResponse giveDiscountCard(Integer discount, Long userId) throws NotFoundException {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException("Incorrect user's id"));
-        user.setDiscountCard(new DiscountCard(discount));
+        user.setDiscountCard(discountCardRepository.save(new DiscountCard(discount)));
+        userRepository.save(user);
         return new MessageResponse("Discount card was added successfully");
     }
-
-    @Override
-    public MessageResponse byuSeasonTicket(ScooterModel model, Principal principal) throws NotFoundException {
-        User user = getUserByPrincipal(principal);
-        user.setSeasonTicket(new SeasonTicket(model));
-        return new MessageResponse("Season ticket was added successfully");
-    }
-
-
 }

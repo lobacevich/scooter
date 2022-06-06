@@ -2,9 +2,11 @@ package by.senla.training.lobacevich.scooter.controller;
 
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.ScooterException;
+import by.senla.training.lobacevich.scooter.dto.OrderRentDto;
 import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
+import by.senla.training.lobacevich.scooter.service.OrderRentService;
 import by.senla.training.lobacevich.scooter.service.ScooterService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ public class ScooterController {
 
     private final ScooterService scooterService;
     private final ValidationErrorResponse validationErrorResponse;
+    private final OrderRentService orderRentService;
 
     @GetMapping
     public List<ScooterDto> getAllScooters() {
@@ -51,5 +54,11 @@ public class ScooterController {
     @PreAuthorize("hasRole('ADMIN')")
     public MessageResponse deleteScooter(@PathVariable("id") Long id) throws ScooterException {
         return scooterService.deleteScooter(id);
+    }
+
+    @GetMapping("/{id}/history")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<OrderRentDto> getOrdersHistory(@PathVariable("id") Long scooterId) {
+        return orderRentService.getOrdersByScooterId(scooterId);
     }
 }

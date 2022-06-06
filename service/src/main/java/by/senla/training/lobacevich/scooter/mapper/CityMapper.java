@@ -9,6 +9,7 @@ public class CityMapper {
 
     public CityDto cityToDto(City city) {
         CityDto cityDto = new CityDto();
+        cityDto.setId(city.getId());
         cityDto.setName(city.getName());
         return cityDto;
     }

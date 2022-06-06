@@ -16,11 +16,11 @@ public class Scooter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private ScooterModel model;
     @Enumerated(EnumType.STRING)
     private ScooterStatus status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Point point;
     @Column
     private Double mileage;

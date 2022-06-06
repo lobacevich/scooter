@@ -18,16 +18,17 @@ public class Point {
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
-    private String PhoneNumber;
+    private String phoneNumber;
     @Column(nullable = false)
     private Integer latitude;
     @Column(nullable = false)
     private Integer longitude;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private City city;
 
-    public Point(String address, Integer latitude, Integer longitude, City city) {
+    public Point(String address, String phoneNumber, Integer latitude, Integer longitude, City city) {
         this.address = address;
+        this.phoneNumber = phoneNumber;
         this.latitude = latitude;
         this.longitude = longitude;
         this.city = city;

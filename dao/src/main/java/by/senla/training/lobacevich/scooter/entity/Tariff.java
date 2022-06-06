@@ -16,13 +16,23 @@ public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private ScooterModel model;
     @Column(nullable = false)
-    private BigDecimal pricePerHour;
+    private BigDecimal pricePerFirstHour;
+    @Column(nullable = false)
+    private BigDecimal pricePerNextHour;
+    @Column(nullable = false)
+    private BigDecimal pricePerFirstDay;
+    @Column(nullable = false)
+    private BigDecimal pricePerNextDay;
 
-    public Tariff(ScooterModel model, BigDecimal pricePerHour) {
+    public Tariff(ScooterModel model, BigDecimal pricePerFirstHour, BigDecimal pricePerNextHour,
+                  BigDecimal pricePerFirstDay, BigDecimal pricePerNextDay) {
         this.model = model;
-        this.pricePerHour = pricePerHour;
+        this.pricePerFirstHour = pricePerFirstHour;
+        this.pricePerNextHour = pricePerNextHour;
+        this.pricePerFirstDay = pricePerFirstDay;
+        this.pricePerNextDay = pricePerNextDay;
     }
 }

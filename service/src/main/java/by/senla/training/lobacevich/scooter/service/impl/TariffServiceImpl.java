@@ -31,7 +31,8 @@ public class TariffServiceImpl implements TariffService {
     @Override
     public TariffDto createTariff(TariffDto tariffDto) throws NotFoundException {
         ScooterModel model = scooterModelService.getById(tariffDto.getModelId());
-        Tariff tariff = new Tariff(model, tariffDto.getPricePerHour());
+        Tariff tariff = new Tariff(model, tariffDto.getPricePerFirstHour(), tariffDto.getPricePerNextHour(),
+                tariffDto.getPricePerFirstDay(), tariffDto.getPricePerNextDay());
         return tariffMapper.tariffToDto(tariffRepository.save(tariff));
     }
 
@@ -39,7 +40,10 @@ public class TariffServiceImpl implements TariffService {
     public TariffDto updateTariff(Long id, TariffDto tariffDto) throws NotFoundException {
         Tariff tariff = getById(id);
         tariff.setModel(scooterModelService.getById(tariffDto.getModelId()));
-        tariff.setPricePerHour(tariffDto.getPricePerHour());
+        tariff.setPricePerFirstHour(tariffDto.getPricePerFirstHour());
+        tariff.setPricePerNextHour(tariffDto.getPricePerNextHour());
+        tariff.setPricePerFirstDay(tariffDto.getPricePerFirstDay());
+        tariff.setPricePerNextDay(tariffDto.getPricePerNextDay());
         return tariffMapper.tariffToDto(tariffRepository.save(tariff));
     }
 

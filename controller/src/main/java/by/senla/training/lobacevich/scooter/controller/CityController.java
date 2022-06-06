@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.controller;
 
+import by.senla.training.lobacevich.scooter.CityException;
 import by.senla.training.lobacevich.scooter.dto.CityDto;
 import by.senla.training.lobacevich.scooter.dto.PointDto;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
@@ -32,7 +33,7 @@ public class CityController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Object createCity(@Valid @RequestBody CityDto cityDto, BindingResult bindingResult) {
+    public Object createCity(@Valid @RequestBody CityDto cityDto, BindingResult bindingResult) throws CityException {
         if (bindingResult.hasErrors()) {
             return validationErrorResponse.getErrors(bindingResult);
         }

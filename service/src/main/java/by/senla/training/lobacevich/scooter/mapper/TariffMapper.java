@@ -11,7 +11,11 @@ public class TariffMapper {
         TariffDto tariffDto = new TariffDto();
         tariffDto.setId(tariff.getId());
         tariffDto.setModelId(tariff.getModel().getId());
-        tariffDto.setPricePerHour(tariff.getPricePerHour());
+        tariffDto.setModelName(tariff.getModel().getName());
+        tariffDto.setPricePerFirstHour(tariff.getPricePerFirstHour());
+        tariffDto.setPricePerNextHour(tariff.getPricePerNextHour());
+        tariffDto.setPricePerFirstDay(tariff.getPricePerFirstDay());
+        tariffDto.setPricePerNextDay(tariff.getPricePerNextDay());
         return tariffDto;
     }
 }

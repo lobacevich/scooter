@@ -20,7 +20,6 @@ public class OrderRentMapper {
         orderRentDto.setClosedDate(orderRent.getClosedDate());
         orderRentDto.setMileage(orderRent.getMileage());
         orderRentDto.setTotalCost(orderRent.getTotalCost());
-        orderRentDto.setBySeasonTicket(orderRent.getBySeasonTicket());
         return orderRentDto;
     }
 }

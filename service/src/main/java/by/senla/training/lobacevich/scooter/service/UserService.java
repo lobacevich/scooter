@@ -5,7 +5,6 @@ import by.senla.training.lobacevich.scooter.UserException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
-import by.senla.training.lobacevich.scooter.entity.ScooterModel;
 import by.senla.training.lobacevich.scooter.entity.User;
 
 import java.security.Principal;
@@ -22,7 +21,5 @@ public interface UserService {
 
     User getUserByPrincipal(Principal principal) throws NotFoundException;
 
-    MessageResponse giveDiscountCard(int discount, Long userId) throws NotFoundException;
-
-    MessageResponse byuSeasonTicket(ScooterModel model, Principal principal) throws NotFoundException;
+    MessageResponse giveDiscountCard(Integer discount, Long userId) throws NotFoundException;
 }

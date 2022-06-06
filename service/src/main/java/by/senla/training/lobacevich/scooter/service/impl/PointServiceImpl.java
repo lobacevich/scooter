@@ -37,8 +37,9 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto createPoint(PointDto pointDto) throws NotFoundException {
-        City city = cityService.getById(pointDto.getId());
-        Point point = new Point(pointDto.getAddress(), pointDto.getLatitude(), pointDto.getLongitude(), city);
+        City city = cityService.getById(pointDto.getCityId());
+        Point point = new Point(pointDto.getAddress(), pointDto.getPhoneNumber(),
+                pointDto.getLatitude(), pointDto.getLongitude(), city);
         return pointMapper.pointToDto(pointRepository.save(point));
     }
 

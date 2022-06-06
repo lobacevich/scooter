@@ -29,8 +29,8 @@ public class PointController {
     }
 
     @GetMapping("/{id}/scooters")
-    public List<ScooterDto> getPointScooters(@PathVariable("id") Long id) throws NotFoundException {
-        return pointService.getPointScooters(id);
+    public List<ScooterDto> getPointScooters(@PathVariable("id") Long pointId) throws NotFoundException {
+        return pointService.getPointScooters(pointId);
     }
 
     @PostMapping

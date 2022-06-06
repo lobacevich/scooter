@@ -14,13 +14,12 @@ public class OrderRentDto {
     private Long userId;
     private Long scooterId;
     private Long startPointId;
-    private OrderStatus status;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
+    private OrderStatus status;
     private Long endPointId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime closedDate;
     private Double mileage;
     private BigDecimal totalCost;
-    private Boolean BySeasonTicket;
 }
