@@ -15,6 +15,7 @@ import by.senla.training.lobacevich.scooter.service.PointService;
 import by.senla.training.lobacevich.scooter.service.ScooterService;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class OrderRentServiceImpl implements OrderRentService {
 
     private final OrderRentRepository orderRentRepository;
@@ -55,6 +57,7 @@ public class OrderRentServiceImpl implements OrderRentService {
         scooter.setPoint(null);
         scooterRepository.save(scooter);
         orderRent.setStatus(OrderStatus.OPENED);
+        log.info("Scooter with id={} was rented by user {}", scooter.getId(), user.getUsername());
         return orderRentMapper.orderRentToDto(orderRentRepository.save(orderRent));
     }
 
@@ -76,6 +79,8 @@ public class OrderRentServiceImpl implements OrderRentService {
         orderRent.setTotalCost(calculateCost(orderRent.getUser().getDiscountCard(),
                 orderRent.getCreatedDate(), tariff));
         orderRent.setStatus(OrderStatus.CLOSED);
+        log.info("Scooter with id={} that was rented by user {} was returned to point with id={}",
+                scooter.getId(), user.getUsername(), endPointId);
         return orderRentMapper.orderRentToDto(orderRentRepository.save(orderRent));
     }
 

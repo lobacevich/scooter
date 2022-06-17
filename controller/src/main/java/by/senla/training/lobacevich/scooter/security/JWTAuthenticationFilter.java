@@ -1,9 +1,10 @@
 package by.senla.training.lobacevich.scooter.security;
 
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
-import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,15 +19,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@AllArgsConstructor
+@Log4j2
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    public static final Logger LOG = LogManager.getLogger();
-    public static final String HEADER_STRING = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer ";
+    @Value("${JWTAuthenticationFilter.requestHeader:Authorization}")
+    private String requestHeader;
+    @Value("${JWTAuthenticationFilter.tokenPrefix:Bearer }")
+    private String tokenPrefix;
 
     private final JWTTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userService;
+
+    @Autowired
+    public JWTAuthenticationFilter(JWTTokenProvider jwtTokenProvider, UserDetailsServiceImpl userService) {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.userService = userService;
+    }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -41,15 +50,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {
-            LOG.error("Could not set user authentication");
-            LOG.error(e.getMessage());
+            log.error("Could not set user authentication");
+            log.error(e.getMessage());
         }
         filterChain.doFilter(request, response);
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
+        String token = request.getHeader(requestHeader);
+        if (StringUtils.hasText(token) && token.startsWith(tokenPrefix)) {
             return token.split(" ")[1];
         } else {
             return null;

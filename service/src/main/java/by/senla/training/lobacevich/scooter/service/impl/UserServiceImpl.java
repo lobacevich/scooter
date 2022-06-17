@@ -13,6 +13,7 @@ import by.senla.training.lobacevich.scooter.repository.DiscountCardRepository;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,9 +23,9 @@ import java.security.Principal;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class UserServiceImpl implements UserService {
 
-    public static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(Long id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Incorrect user id"));
+                new NotFoundException("User with id=" + id + " is not found"));
     }
 
     @Override
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userMapper.userToDto(userRepository.save(user));
         } catch (Exception e) {
-            LOG.error("Error during user registration. {}", e.getMessage());
+            log.error("Error during user registration. {}", e.getMessage());
             throw new CreationException("User with the same username or email already exists");
         }
     }
@@ -76,8 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public MessageResponse giveDiscountCard(Integer discount, Long userId) throws NotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new NotFoundException("Incorrect user's id"));
+        User user = findUserById(userId);
         user.setDiscountCard(discountCardRepository.save(new DiscountCard(discount)));
         userRepository.save(user);
         return new MessageResponse("Discount card was added successfully");

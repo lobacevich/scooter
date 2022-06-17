@@ -10,6 +10,7 @@ import by.senla.training.lobacevich.scooter.repository.TariffRepository;
 import by.senla.training.lobacevich.scooter.service.ScooterModelService;
 import by.senla.training.lobacevich.scooter.service.TariffService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class TariffServiceImpl implements TariffService {
 
     private final TariffRepository tariffRepository;
@@ -37,6 +39,7 @@ public class TariffServiceImpl implements TariffService {
         ScooterModel model = scooterModelService.getById(tariffDto.getModelId());
         Tariff tariff = new Tariff(model, tariffDto.getPricePerFirstHour(), tariffDto.getPricePerNextHour(),
                 tariffDto.getPricePerFirstDay(), tariffDto.getPricePerNextDay());
+        log.info("Tariff for model {} was create", model.getName());
         return tariffMapper.tariffToDto(tariffRepository.save(tariff));
     }
 
@@ -48,6 +51,7 @@ public class TariffServiceImpl implements TariffService {
         tariff.setPricePerNextHour(tariffDto.getPricePerNextHour());
         tariff.setPricePerFirstDay(tariffDto.getPricePerFirstDay());
         tariff.setPricePerNextDay(tariffDto.getPricePerNextDay());
+        log.info("Tariff for model {} was update", tariff.getModel().getName());
         return tariffMapper.tariffToDto(tariffRepository.save(tariff));
     }
 

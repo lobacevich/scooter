@@ -11,6 +11,7 @@ import by.senla.training.lobacevich.scooter.repository.CityRepository;
 import by.senla.training.lobacevich.scooter.repository.PointRepository;
 import by.senla.training.lobacevich.scooter.service.CityService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class CityServiceImpl implements CityService {
 
     private final CityRepository cityRepository;
@@ -41,7 +43,9 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto createCity(CityDto cityDto) throws CreationException {
         try {
-            return cityMapper.cityToDto(cityRepository.save(new City(cityDto.getName())));
+            City city = cityRepository.save(new City(cityDto.getName()));
+            log.info("City with id={} and name={} was create", city.getId(), city.getName());
+            return cityMapper.cityToDto(city);
         } catch (Exception e) {
             throw new CreationException("City with the same name already exists");
         }

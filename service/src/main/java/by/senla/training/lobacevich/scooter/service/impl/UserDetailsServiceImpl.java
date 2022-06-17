@@ -3,7 +3,7 @@ package by.senla.training.lobacevich.scooter.service.impl;
 import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,15 +16,16 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " is not found"));
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {

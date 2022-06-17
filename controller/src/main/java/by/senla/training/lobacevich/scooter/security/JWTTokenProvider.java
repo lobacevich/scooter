@@ -3,8 +3,7 @@ package by.senla.training.lobacevich.scooter.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Log4j2
 public class JWTTokenProvider {
 
-    public static final Logger LOG = LogManager.getLogger();
-    @Value("${JWTTokenProvider.secret:secretKey}")
+    @Value("${JWTTokenProvider.secretKey:secretKey}")
     private String secretKey;
     @Value("${JWTTokenProvider.expirationTime:900000}")
     private int expirationTime;
@@ -47,7 +46,7 @@ public class JWTTokenProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            log.error("{} : {}", e.getClass(), e.getMessage());
             return false;
         }
     }

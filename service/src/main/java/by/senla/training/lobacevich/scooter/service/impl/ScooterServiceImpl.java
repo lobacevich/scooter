@@ -13,6 +13,7 @@ import by.senla.training.lobacevich.scooter.service.PointService;
 import by.senla.training.lobacevich.scooter.service.ScooterModelService;
 import by.senla.training.lobacevich.scooter.service.ScooterService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class ScooterServiceImpl implements ScooterService {
 
     private final ScooterRepository scooterRepository;
@@ -47,12 +49,16 @@ public class ScooterServiceImpl implements ScooterService {
         Scooter scooter = new Scooter(model, point);
         scooter.setMileage(0.0);
         scooter.setStatus(ScooterStatus.VACANT);
-        return scooterMapper.scooterToDto(scooterRepository.save(scooter));
+        Scooter savedScooter = scooterRepository.save(scooter);
+        log.info("Scooter with id={} and model {} was add", savedScooter.getId(),
+                model.getName());
+        return scooterMapper.scooterToDto(savedScooter);
     }
 
     @Override
     public MessageResponse deleteScooter(Long id) {
         scooterRepository.deleteById(id);
+        log.info("Scooter with id={} was delete", id);
         return new MessageResponse("Scooter was delete successfully");
     }
 

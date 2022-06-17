@@ -13,6 +13,7 @@ import by.senla.training.lobacevich.scooter.repository.ScooterRepository;
 import by.senla.training.lobacevich.scooter.service.CityService;
 import by.senla.training.lobacevich.scooter.service.PointService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class PointServiceImpl implements PointService {
 
     private final PointRepository pointRepository;
@@ -40,12 +42,16 @@ public class PointServiceImpl implements PointService {
         City city = cityService.getById(pointDto.getCityId());
         Point point = new Point(pointDto.getAddress(), pointDto.getPhoneNumber(),
                 pointDto.getLatitude(), pointDto.getLongitude(), city);
-        return pointMapper.pointToDto(pointRepository.save(point));
+        Point savedPoint = pointRepository.save(point);
+        log.info("Point with id={} was create in the city {}", savedPoint.getId(),
+                city.getName());
+        return pointMapper.pointToDto(savedPoint);
     }
 
     @Override
     public MessageResponse deletePoint(Long id) {
         pointRepository.deleteById(id);
+        log.info("Point with id={} was delete", id);
         return new MessageResponse("Point was deleted successfully");
     }
 
@@ -53,6 +59,7 @@ public class PointServiceImpl implements PointService {
     public PointDto updatePoint(Long id, PointDto pointDto) throws NotFoundException {
         Point point = getById(id);
         point.setAddress(pointDto.getAddress());
+        point.setPhoneNumber(pointDto.getPhoneNumber());
         point.setLatitude(pointDto.getLatitude());
         point.setLongitude(pointDto.getLongitude());
         return pointMapper.pointToDto(pointRepository.save(point));
