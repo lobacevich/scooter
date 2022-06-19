@@ -38,18 +38,16 @@ public class OrderRentServiceImpl implements OrderRentService {
     private final TariffRepository tariffRepository;
     private final OrderRentMapper orderRentMapper;
 
-    public OrderRent getOrderById(Long id) throws NotFoundException {
-        return orderRentRepository.findById(id).orElseThrow(() -> new NotFoundException("Incorrect order id"));
-    }
-
     @Override
     public Object openRent(Principal principal, Long scooterId) throws NotFoundException {
         Scooter scooter = scooterService.getScooterById(scooterId);
         if (scooter.getStatus() == ScooterStatus.RENTED) {
+            log.info("Scooter with id={} was already rent", scooterId);
             return new MessageResponse("Scooter was already rent");
         }
         User user = userService.getUserByPrincipal(principal);
         if (orderRentRepository.existsByUserIdAndStatus(user.getId(), OrderStatus.OPENED)) {
+            log.info("User {} already rented a scooter", user.getUsername());
             return new MessageResponse("User already rented a scooter");
         }
         OrderRent orderRent = new OrderRent(user, scooter, scooter.getPoint(), LocalDateTime.now());

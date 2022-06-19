@@ -1,6 +1,7 @@
 package by.senla.training.lobacevich.scooter.controller;
 
 import by.senla.training.lobacevich.scooter.NotFoundException;
+import by.senla.training.lobacevich.scooter.UpdateException;
 import by.senla.training.lobacevich.scooter.dto.OrderRentDto;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto updateUser(@RequestBody UserDto userDto, Principal principal) throws NotFoundException {
+    public UserDto updateUser(@RequestBody UserDto userDto, Principal principal) throws NotFoundException, UpdateException {
         return userService.updateUser(userDto, principal);
     }
 
@@ -36,10 +37,10 @@ public class UserController {
         return orderRentService.getUserOrders(principal);
     }
 
-    @PostMapping("{id}/giveDiscont")
+    @PostMapping("{id}/giveDiscount")
     @PreAuthorize("hasRole('ADMIN')")
-    public MessageResponse giveDiscontCard(@PathVariable("id") Long id,
-                                           @RequestParam("discont") Integer discont) throws NotFoundException {
-        return userService.giveDiscountCard(discont, id);
+    public MessageResponse giveDiscountCard(@PathVariable("id") Long id,
+                                           @RequestParam("discount") Integer discount) throws NotFoundException {
+        return userService.giveDiscountCard(discount, id);
     }
 }

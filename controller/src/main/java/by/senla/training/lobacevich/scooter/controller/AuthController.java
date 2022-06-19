@@ -38,8 +38,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return validationErrorResponse.getErrors(bindingResult);
         }
-        userService.createUser(signupRequest);
-        return new MessageResponse("User was register successfully!");
+        return userService.createUser(signupRequest);
     }
     
     @PostMapping("/login")

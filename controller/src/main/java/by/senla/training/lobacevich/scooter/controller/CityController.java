@@ -5,6 +5,7 @@ import by.senla.training.lobacevich.scooter.dto.CityDto;
 import by.senla.training.lobacevich.scooter.dto.PointDto;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
 import by.senla.training.lobacevich.scooter.service.CityService;
+import by.senla.training.lobacevich.scooter.service.PointService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import java.util.List;
 public class CityController {
 
     private final CityService cityService;
+    private final PointService pointService;
     private final ValidationErrorResponse validationErrorResponse;
 
     @GetMapping
@@ -28,7 +30,7 @@ public class CityController {
 
     @GetMapping("{id}/points")
     public List<PointDto> getCityPoints(@PathVariable("id") Long id) {
-        return cityService.getCityPoints(id);
+        return pointService.getCityPoints(id);
     }
 
     @PostMapping

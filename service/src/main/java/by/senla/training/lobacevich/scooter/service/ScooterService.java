@@ -18,4 +18,6 @@ public interface ScooterService {
     MessageResponse deleteScooter(Long id);
 
     ScooterDto updateScooter(Long id, ScooterDto scooterDto) throws NotFoundException;
+
+    List<ScooterDto> getPointScooters(Long pointId) throws NotFoundException;
 }

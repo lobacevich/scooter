@@ -2,6 +2,7 @@ package by.senla.training.lobacevich.scooter.exceptionhandler;
 
 import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
+import by.senla.training.lobacevich.scooter.UpdateException;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler({NotFoundException.class,
-            CreationException.class})
+            CreationException.class, UpdateException.class})
     public ResponseEntity<MessageResponse> getCustomException(Exception e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);

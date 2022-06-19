@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.controller;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.ScooterModelDto;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
@@ -28,7 +29,7 @@ public class ScooterModelController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Object createModel(@Valid @RequestBody ScooterModelDto modelDto,
-                              BindingResult bindingResult) {
+                              BindingResult bindingResult) throws CreationException {
         if (bindingResult.hasErrors()) {
             return validationErrorResponse.getErrors(bindingResult);
         }

@@ -2,14 +2,11 @@ package by.senla.training.lobacevich.scooter.service.impl;
 
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.PointDto;
-import by.senla.training.lobacevich.scooter.dto.ScooterDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.entity.City;
 import by.senla.training.lobacevich.scooter.entity.Point;
 import by.senla.training.lobacevich.scooter.mapper.PointMapper;
-import by.senla.training.lobacevich.scooter.mapper.ScooterMapper;
 import by.senla.training.lobacevich.scooter.repository.PointRepository;
-import by.senla.training.lobacevich.scooter.repository.ScooterRepository;
 import by.senla.training.lobacevich.scooter.service.CityService;
 import by.senla.training.lobacevich.scooter.service.PointService;
 import lombok.AllArgsConstructor;
@@ -27,8 +24,6 @@ public class PointServiceImpl implements PointService {
 
     private final PointRepository pointRepository;
     private final PointMapper pointMapper;
-    private final ScooterRepository scooterRepository;
-    private final ScooterMapper scooterMapper;
     private final CityService cityService;
 
     @Override
@@ -65,17 +60,6 @@ public class PointServiceImpl implements PointService {
         return pointMapper.pointToDto(pointRepository.save(point));
     }
 
-    @Override
-    public List<ScooterDto> getPointScooters(Long pointId) throws NotFoundException {
-        if (!pointRepository.existsById(pointId)) {
-            throw new NotFoundException("Incorrect point id");
-        }
-        return scooterRepository.findScootersByPointId(pointId)
-                .stream()
-                .map(scooterMapper::scooterToDto)
-                .collect(Collectors.toList());
-    }
-
     private double calculateDistance(Integer latitude, Integer longitude, PointDto point) {
         return Math.sqrt((Math.pow(latitude - point.getLatitude(), 2) +
                 Math.pow(longitude - point.getLongitude(), 2)));
@@ -92,5 +76,12 @@ public class PointServiceImpl implements PointService {
         pointDtoList.forEach(x -> x.setDistance(calculateDistance(latitude, longitude, x)));
         pointDtoList.sort(Comparator.comparing(PointDto::getDistance));
         return pointDtoList;
+    }
+
+    @Override
+    public List<PointDto> getCityPoints(Long cityId) {
+        return pointRepository.findByCityId(cityId).stream()
+                .map(pointMapper::pointToDto).
+                collect(Collectors.toList());
     }
 }

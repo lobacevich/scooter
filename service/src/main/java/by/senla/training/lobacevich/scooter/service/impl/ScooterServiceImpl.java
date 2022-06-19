@@ -8,6 +8,7 @@ import by.senla.training.lobacevich.scooter.entity.Scooter;
 import by.senla.training.lobacevich.scooter.entity.ScooterModel;
 import by.senla.training.lobacevich.scooter.entity.enums.ScooterStatus;
 import by.senla.training.lobacevich.scooter.mapper.ScooterMapper;
+import by.senla.training.lobacevich.scooter.repository.PointRepository;
 import by.senla.training.lobacevich.scooter.repository.ScooterRepository;
 import by.senla.training.lobacevich.scooter.service.PointService;
 import by.senla.training.lobacevich.scooter.service.ScooterModelService;
@@ -28,6 +29,7 @@ public class ScooterServiceImpl implements ScooterService {
     private final ScooterModelService scooterModelService;
     private final ScooterMapper scooterMapper;
     private final PointService pointService;
+    private final PointRepository pointRepository;
 
     @Override
     public Scooter getScooterById(Long id) throws NotFoundException {
@@ -70,5 +72,16 @@ public class ScooterServiceImpl implements ScooterService {
         scooter.setModel(model);
         scooter.setPoint(point);
         return scooterMapper.scooterToDto(scooterRepository.save(scooter));
+    }
+
+    @Override
+    public List<ScooterDto> getPointScooters(Long pointId) throws NotFoundException {
+        if (!pointRepository.existsById(pointId)) {
+            throw new NotFoundException("Incorrect point id");
+        }
+        return scooterRepository.findScootersByPointId(pointId)
+                .stream()
+                .map(scooterMapper::scooterToDto)
+                .collect(Collectors.toList());
     }
 }

@@ -17,5 +17,5 @@ public interface OrderRentRepository extends JpaRepository<OrderRent, Long> {
 
     List<OrderRent> findByScooterId(Long scooterId);
 
-    List<OrderRent> findByUserId(Long scooterId);
+    List<OrderRent> findByUserId(Long userId);
 }

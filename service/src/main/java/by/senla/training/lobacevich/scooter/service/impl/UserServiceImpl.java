@@ -2,6 +2,7 @@ package by.senla.training.lobacevich.scooter.service.impl;
 
 import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
+import by.senla.training.lobacevich.scooter.UpdateException;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -14,8 +15,6 @@ import by.senla.training.lobacevich.scooter.repository.UserRepository;
 import by.senla.training.lobacevich.scooter.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +59,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, Principal principal) throws NotFoundException {
+    public UserDto updateUser(UserDto userDto, Principal principal) throws NotFoundException, UpdateException {
         User user = getUserByPrincipal(principal);
-        user.setFirstname(userDto.getFirstname());
-        user.setLastname(userDto.getLastname());
-        user.setEmail(userDto.getEmail());
-        return userMapper.userToDto(userRepository.save(user));
+        user.setFirstname(userDto.getFirstname() != null ? userDto.getFirstname() : user.getFirstname());
+        user.setLastname(userDto.getLastname() != null ? userDto.getLastname() : user.getLastname());
+        user.setEmail(userDto.getEmail() != null ? userDto.getEmail() : user.getEmail());
+        try {
+            return userMapper.userToDto(userRepository.save(user));
+        } catch (Exception e) {
+            log.error("Error during user update. {}", e.getMessage());
+            throw new UpdateException("User with the same email already exists");
+        }
     }
 
     @Override
@@ -80,6 +84,6 @@ public class UserServiceImpl implements UserService {
         User user = findUserById(userId);
         user.setDiscountCard(discountCardRepository.save(new DiscountCard(discount)));
         userRepository.save(user);
-        return new MessageResponse("Discount card was added successfully");
+        return new MessageResponse("Discount card was add successfully");
     }
 }

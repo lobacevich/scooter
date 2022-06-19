@@ -1,5 +1,6 @@
 package by.senla.training.lobacevich.scooter.service.impl;
 
+import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.dto.ScooterModelDto;
 import by.senla.training.lobacevich.scooter.entity.ScooterModel;
@@ -28,11 +29,16 @@ public class ScooterModelServiceImpl implements ScooterModelService {
     }
 
     @Override
-    public ScooterModelDto createModel(ScooterModelDto modelDto) {
+    public ScooterModelDto createModel(ScooterModelDto modelDto) throws CreationException {
         ScooterModel model = new ScooterModel(modelDto.getName(),modelDto.getMaxSpeed(),
                 modelDto.getPowerReserveKm());
-        log.info("Model with name {} was add", model.getName());
-        return scooterModelMapper.scooterModelToDto(scooterModelRepository.save(model));
+        try {
+            log.info("Model with name {} was add", model.getName());
+            return scooterModelMapper.scooterModelToDto(scooterModelRepository.save(model));
+        } catch (Exception e) {
+            log.error("Error during model creation. {}", e.getMessage());
+            throw new CreationException("Model with the same name already exists");
+        }
     }
 
     @Override
