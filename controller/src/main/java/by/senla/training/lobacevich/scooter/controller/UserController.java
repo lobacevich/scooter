@@ -7,6 +7,7 @@ import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.service.OrderRentService;
 import by.senla.training.lobacevich.scooter.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +23,20 @@ public class UserController {
     private final UserService userService;
     private final OrderRentService orderRentService;
 
+    @Operation(summary = "Get current user information")
     @GetMapping
     public UserDto getCurrentUser(Principal principal) throws NotFoundException {
         return userService.getCurrentUser(principal);
     }
 
-    @PostMapping
+    @Operation(summary = "Update user")
+    @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto, Principal principal) throws NotFoundException, UpdateException {
         return userService.updateUser(userDto, principal);
     }
 
-    @GetMapping("/history")
+    @Operation(summary = "Get all orders of the current user")
+    @GetMapping("/orders")
     public List<OrderRentDto> getOrdersHistory(Principal principal) throws NotFoundException {
         return orderRentService.getUserOrders(principal);
     }

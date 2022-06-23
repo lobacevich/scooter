@@ -7,6 +7,7 @@ import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
 import by.senla.training.lobacevich.scooter.service.PointService;
 import by.senla.training.lobacevich.scooter.service.ScooterService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -24,17 +25,20 @@ public class PointController {
     private final ScooterService scooterService;
     private final ValidationErrorResponse validationErrorResponse;
 
+    @Operation(summary = "Get all points")
     @GetMapping
     public List<PointDto> getAllPoints(@RequestParam(value = "latitude", required = false) Integer latitude,
                                        @RequestParam(value = "longitude", required = false) Integer longitude) {
         return pointService.getPoints(latitude, longitude);
     }
 
+    @Operation(summary = "Get all scooters in the point")
     @GetMapping("/{id}/scooters")
     public List<ScooterDto> getPointScooters(@PathVariable("id") Long pointId) throws NotFoundException {
         return scooterService.getPointScooters(pointId);
     }
 
+    @Operation(summary = "Create a point")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Object createPoint(@Valid @RequestBody PointDto pointDto, BindingResult bindingResult) throws NotFoundException {
@@ -44,7 +48,8 @@ public class PointController {
         return pointService.createPoint(pointDto);
     }
 
-    @PostMapping("/{id}")
+    @Operation(summary = "Update a point")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Object updatePoint(@PathVariable("id") Long id, @Valid @RequestBody PointDto pointDto,
                               BindingResult bindingResult) throws NotFoundException {
@@ -54,6 +59,7 @@ public class PointController {
         return pointService.updatePoint(id, pointDto);
     }
 
+    @Operation(summary = "Delete a point")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public MessageResponse deletePoint(@PathVariable("id") Long id) {

@@ -12,7 +12,6 @@
 
     <artifactId>controller</artifactId>
 
-
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
@@ -24,9 +23,15 @@
             <artifactId>service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+                <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>scooterRent</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

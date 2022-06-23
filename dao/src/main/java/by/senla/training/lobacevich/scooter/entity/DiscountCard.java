@@ -17,6 +17,8 @@ public class DiscountCard {
     private Long id;
     @Column(nullable = false)
     private Integer discountPercent;
+    @Column
+    private Integer totalSum;
 
     public DiscountCard(Integer discountPercent) {
         this.discountPercent = discountPercent;

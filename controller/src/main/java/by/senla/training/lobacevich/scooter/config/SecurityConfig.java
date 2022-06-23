@@ -1,5 +1,7 @@
-package by.senla.training.lobacevich.scooter.security;
+package by.senla.training.lobacevich.scooter.config;
 
+import by.senla.training.lobacevich.scooter.security.JWTAuthenticationEntryPoint;
+import by.senla.training.lobacevich.scooter.security.JWTAuthenticationFilter;
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String [] PERMIT_ALL = {"/auth/**", "/swagger-ui/**", "/v3/api-docs/**"};
     private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailsServiceImpl userDetailsService;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
@@ -38,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers(PERMIT_ALL).permitAll()
                 .anyRequest().authenticated();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }

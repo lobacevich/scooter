@@ -7,6 +7,7 @@ import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
 import by.senla.training.lobacevich.scooter.dto.response.ValidationErrorResponse;
 import by.senla.training.lobacevich.scooter.security.JWTTokenProvider;
 import by.senla.training.lobacevich.scooter.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +33,7 @@ public class AuthController {
     private final JWTTokenProvider jwtTokenProvider;
     private final ValidationErrorResponse validationErrorResponse;
 
+    @Operation(summary = "Register a new user")
     @PostMapping("/signup")
     public Object registerUser(@Valid @RequestBody SignupRequest signupRequest,
                                BindingResult bindingResult) throws CreationException {
@@ -40,7 +42,8 @@ public class AuthController {
         }
         return userService.createUser(signupRequest);
     }
-    
+
+    @Operation(summary = "User log in")
     @PostMapping("/login")
     public Object authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                    BindingResult bindingResult) {

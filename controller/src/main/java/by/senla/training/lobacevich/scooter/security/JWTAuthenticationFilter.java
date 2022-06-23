@@ -2,6 +2,7 @@ package by.senla.training.lobacevich.scooter.security;
 
 import by.senla.training.lobacevich.scooter.service.impl.UserDetailsServiceImpl;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,23 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@AllArgsConstructor
 @Log4j2
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    @Value("${JWTAuthenticationFilter.requestHeader:Authorization}")
-    private String requestHeader;
-    @Value("${JWTAuthenticationFilter.tokenPrefix:Bearer }")
-    private String tokenPrefix;
+    private static final String REQUEST_HEADER = "Authorization";
+    private static final String TOKEN_PREFIX = "Bearer ";
 
     private final JWTTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userService;
-
-    @Autowired
-    public JWTAuthenticationFilter(JWTTokenProvider jwtTokenProvider, UserDetailsServiceImpl userService) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-    }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -57,8 +50,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(requestHeader);
-        if (StringUtils.hasText(token) && token.startsWith(tokenPrefix)) {
+        String token = request.getHeader(REQUEST_HEADER);
+        if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
             return token.split(" ")[1];
         } else {
             return null;
