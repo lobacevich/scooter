@@ -99,12 +99,14 @@ public class PointServiceImplTest {
 
     @Test
     public void PointServiceImpl_getPoints_withParams() {
-        PointDto pointDto1 = new PointDto();
-        pointDto1.setLatitude(54);
-        pointDto1.setLongitude(53);
-        PointDto pointDto2 = new PointDto();
-        pointDto2.setLatitude(50);
-        pointDto2.setLongitude(30);
+        PointDto pointDto1 = PointDto.builder()
+                .latitude(54)
+                .longitude(53)
+                .build();
+        PointDto pointDto2 = PointDto.builder()
+                .latitude(50)
+                .longitude(30)
+                .build();
         when(pointRepository.findAll()).thenReturn(List.of(point2, point));
         when(pointMapper.pointToDto(point)).thenReturn(pointDto1);
         when(pointMapper.pointToDto(point2)).thenReturn(pointDto2);
@@ -119,12 +121,14 @@ public class PointServiceImplTest {
 
     @Test
     public void PointServiceImpl_getPoints_withoutParams() {
-        PointDto pointDto1 = new PointDto();
-        pointDto1.setLatitude(54);
-        pointDto1.setLongitude(53);
-        PointDto pointDto2 = new PointDto();
-        pointDto2.setLatitude(50);
-        pointDto2.setLongitude(30);
+        PointDto pointDto1 = PointDto.builder()
+                .latitude(54)
+                .longitude(53)
+                .build();
+        PointDto pointDto2 = PointDto.builder()
+                .latitude(50)
+                .longitude(30)
+                .build();
         when(pointRepository.findAll()).thenReturn(List.of(point2, point));
         when(pointMapper.pointToDto(point)).thenReturn(pointDto1);
         when(pointMapper.pointToDto(point2)).thenReturn(pointDto2);

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class ScooterModelMapper {
 
     public ScooterModelDto scooterModelToDto(ScooterModel model) {
-        ScooterModelDto scooterModelDto = new ScooterModelDto();
-        scooterModelDto.setId(model.getId());
-        scooterModelDto.setName(model.getName());
-        scooterModelDto.setMaxSpeed(model.getMaxSpeed());
-        scooterModelDto.setPowerReserveKm(model.getPowerReserveKm());
-        return scooterModelDto;
+        return ScooterModelDto.builder()
+                .id(model.getId())
+                .name(model.getName())
+                .maxSpeed(model.getMaxSpeed())
+                .powerReserveKm(model.getPowerReserveKm())
+                .build();
     }
 }

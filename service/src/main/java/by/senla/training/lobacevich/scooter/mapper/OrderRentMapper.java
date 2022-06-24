@@ -8,18 +8,17 @@ import org.springframework.stereotype.Component;
 public class OrderRentMapper {
 
     public OrderRentDto orderRentToDto(OrderRent orderRent) {
-        OrderRentDto orderRentDto = new OrderRentDto();
-        orderRentDto.setId(orderRent.getId());
-        orderRentDto.setUserId(orderRent.getUser().getId());
-        orderRentDto.setScooterId(orderRent.getScooter().getId());
-        orderRentDto.setStartPointId(orderRent.getStartPoint().getId());
-        orderRentDto.setStatus(orderRent.getStatus());
-        orderRentDto.setCreatedDate(orderRent.getCreatedDate());
-        orderRentDto.setEndPointId(orderRent.getEndPoint() == null ? null :
-                orderRent.getEndPoint().getId());
-        orderRentDto.setClosedDate(orderRent.getClosedDate());
-        orderRentDto.setMileage(orderRent.getMileage());
-        orderRentDto.setTotalCost(orderRent.getTotalCost());
-        return orderRentDto;
+        return OrderRentDto.builder()
+                .id(orderRent.getId())
+                .userId(orderRent.getUser().getId())
+                .scooterId(orderRent.getScooter().getId())
+                .startPointId(orderRent.getStartPoint().getId())
+                .status(orderRent.getStatus())
+                .createdDate(orderRent.getCreatedDate())
+                .endPointId(orderRent.getEndPoint() == null ? null : orderRent.getEndPoint().getId())
+                .closedDate(orderRent.getClosedDate())
+                .mileage(orderRent.getMileage())
+                .totalCost(orderRent.getTotalCost())
+                .build();
     }
 }

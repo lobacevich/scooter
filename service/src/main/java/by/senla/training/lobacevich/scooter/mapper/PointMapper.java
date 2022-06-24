@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 public class PointMapper {
 
     public PointDto pointToDto(Point point) {
-        PointDto pointDto = new PointDto();
-        pointDto.setId(point.getId());
-        pointDto.setAddress(point.getAddress());
-        pointDto.setLatitude(point.getLatitude());
-        pointDto.setLongitude(point.getLongitude());
-        pointDto.setCityId(point.getCity().getId());
-        pointDto.setPhoneNumber(point.getPhoneNumber());
-        return pointDto;
+        return PointDto.builder()
+                .id(point.getId())
+                .address(point.getAddress())
+                .latitude(point.getLatitude())
+                .longitude(point.getLongitude())
+                .cityId(point.getCity().getId())
+                .phoneNumber(point.getPhoneNumber())
+                .build();
     }
 }

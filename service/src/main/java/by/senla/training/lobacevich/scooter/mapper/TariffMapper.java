@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 public class TariffMapper {
 
     public TariffDto tariffToDto(Tariff tariff) {
-        TariffDto tariffDto = new TariffDto();
-        tariffDto.setId(tariff.getId());
-        tariffDto.setModelId(tariff.getModel().getId());
-        tariffDto.setModelName(tariff.getModel().getName());
-        tariffDto.setPricePerFirstHour(tariff.getPricePerFirstHour());
-        tariffDto.setPricePerNextHour(tariff.getPricePerNextHour());
-        tariffDto.setPricePerFirstDay(tariff.getPricePerFirstDay());
-        tariffDto.setPricePerNextDay(tariff.getPricePerNextDay());
-        return tariffDto;
+        return TariffDto.builder()
+                .id(tariff.getId())
+                .modelId(tariff.getModel().getId())
+                .modelName(tariff.getModel().getName())
+                .pricePerFirstHour(tariff.getPricePerFirstHour())
+                .pricePerNextHour(tariff.getPricePerNextHour())
+                .pricePerFirstDay(tariff.getPricePerFirstDay())
+                .pricePerNextDay(tariff.getPricePerNextDay())
+                .build();
     }
 }

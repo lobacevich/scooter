@@ -8,13 +8,12 @@ import org.springframework.stereotype.Component;
 public class ScooterMapper {
 
     public ScooterDto scooterToDto(Scooter scooter) {
-        ScooterDto scooterDto = new ScooterDto();
-        scooterDto.setId(scooter.getId());
-        scooterDto.setModelId(scooter.getModel().getId());
-        scooterDto.setStatus(scooter.getStatus().name());
-        scooterDto.setPointId(scooter.getPoint() == null ? null :
-                scooter.getPoint().getId());
-        scooterDto.setMileage(scooter.getMileage());
-        return scooterDto;
+        return ScooterDto.builder()
+                .id(scooter.getId())
+                .modelId(scooter.getModel().getId())
+                .status(scooter.getStatus())
+                .pointId(scooter.getPoint() == null ? null : scooter.getPoint().getId())
+                .mileage(scooter.getMileage())
+                .build();
     }
 }

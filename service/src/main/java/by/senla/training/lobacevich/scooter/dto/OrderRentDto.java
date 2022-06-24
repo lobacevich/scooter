@@ -3,6 +3,7 @@ package by.senla.training.lobacevich.scooter.dto;
 import by.senla.training.lobacevich.scooter.entity.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
 public class OrderRentDto {
 
     private Long id;
