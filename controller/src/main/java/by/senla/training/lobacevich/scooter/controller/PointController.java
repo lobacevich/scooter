@@ -49,7 +49,7 @@ public class PointController {
     }
 
     @Operation(summary = "Update a point")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Object updatePoint(@PathVariable("id") Long id, @Valid @RequestBody PointDto pointDto,
                               BindingResult bindingResult) throws NotFoundException {

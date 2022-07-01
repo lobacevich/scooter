@@ -3,10 +3,10 @@ package by.senla.training.lobacevich.scooter.service.impl;
 import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.UpdateException;
+import by.senla.training.lobacevich.scooter.dto.request.ChangePasswordRequest;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
-import by.senla.training.lobacevich.scooter.entity.DiscountCard;
 import by.senla.training.lobacevich.scooter.entity.User;
 import by.senla.training.lobacevich.scooter.entity.enums.ERole;
 import by.senla.training.lobacevich.scooter.mapper.UserMapper;
@@ -80,10 +80,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MessageResponse giveDiscountCard(Integer discount, Long userId) throws NotFoundException {
-        User user = findUserById(userId);
-        user.setDiscountCard(discountCardRepository.save(new DiscountCard(discount)));
+    public UserDto setAdmin(Long id) throws NotFoundException {
+        User user = findUserById(id);
+        user.setRole(ERole.ROLE_ADMIN);
+        return userMapper.userToDto(userRepository.save(user));
+    }
+
+    @Override
+    public MessageResponse changePassword(Principal principal, ChangePasswordRequest password) throws NotFoundException {
+        User user = getUserByPrincipal(principal);
+        user.setPassword(passwordEncoder.encode(password.getPassword()));
         userRepository.save(user);
-        return new MessageResponse("Discount card was add successfully");
+        return new MessageResponse("The password has been changed");
     }
 }

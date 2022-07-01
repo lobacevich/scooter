@@ -40,7 +40,7 @@ public class ScooterModelController {
     }
 
     @Operation(summary = "Update a model")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Object updateModel(@PathVariable("id") Long id,@Valid @RequestBody ScooterModelDto modelDto,
                               BindingResult bindingResult) throws NotFoundException {

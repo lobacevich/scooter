@@ -43,7 +43,7 @@ public class ScooterController {
     }
 
     @Operation(summary = "Update a scooter")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Object updateScooter(@PathVariable("id") Long id,@Valid @RequestBody ScooterDto scooterDto,
                                BindingResult bindingResult) throws NotFoundException {

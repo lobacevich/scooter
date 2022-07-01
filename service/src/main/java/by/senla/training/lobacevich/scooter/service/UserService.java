@@ -3,6 +3,7 @@ package by.senla.training.lobacevich.scooter.service;
 import by.senla.training.lobacevich.scooter.CreationException;
 import by.senla.training.lobacevich.scooter.NotFoundException;
 import by.senla.training.lobacevich.scooter.UpdateException;
+import by.senla.training.lobacevich.scooter.dto.request.ChangePasswordRequest;
 import by.senla.training.lobacevich.scooter.dto.request.SignupRequest;
 import by.senla.training.lobacevich.scooter.dto.UserDto;
 import by.senla.training.lobacevich.scooter.dto.response.MessageResponse;
@@ -22,5 +23,7 @@ public interface UserService {
 
     User getUserByPrincipal(Principal principal) throws NotFoundException;
 
-    MessageResponse giveDiscountCard(Integer discount, Long userId) throws NotFoundException;
+    UserDto setAdmin(Long id) throws NotFoundException;
+
+    MessageResponse changePassword(Principal principal, ChangePasswordRequest password) throws NotFoundException;
 }

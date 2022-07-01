@@ -89,9 +89,13 @@ public class OrderRentServiceImpl implements OrderRentService {
         } else {
             discount = 0;
         }
-        return calculateByHours(ChronoUnit.MINUTES.between(beginTime, LocalDateTime.now()), tariff)
+        BigDecimal cost = calculateByHours(ChronoUnit.MINUTES.between(beginTime, LocalDateTime.now()), tariff)
                 .min(calculateByDays(ChronoUnit.HOURS.between(beginTime, LocalDateTime.now()),
                         tariff)).multiply(BigDecimal.valueOf((100 - discount) / 100.0));
+        if (discountCard != null) {
+            discountCard.setTotalSum(discountCard.getTotalSum().add(cost));
+        }
+        return cost;
     }
 
     private BigDecimal calculateByDays(long hoursCount, Tariff tariff) {

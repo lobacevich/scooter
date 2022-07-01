@@ -40,7 +40,7 @@ public class TariffController {
     }
 
     @Operation(summary = "Update a tariff")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Object updateTariff(@PathVariable("id") Long id,@Valid @RequestBody TariffDto tariffDto,
                               BindingResult bindingResult) throws NotFoundException {

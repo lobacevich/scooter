@@ -130,15 +130,4 @@ public class UserServiceImplTest {
         assertThrows(NotFoundException.class, () -> userService.getUserByPrincipal(principal),
                 NOT_FOUND_PRINCIPAL_MESSAGE);
     }
-
-    @Test
-    public void UserServiceImpl_giveDiscountCard() throws NotFoundException {
-        User userEntity = new User();
-        when(userRepository.findById(ID)).thenReturn(Optional.of(userEntity));
-        when(discountCard.getDiscountPercent()).thenReturn(DISCOUNT);
-        when(discountCardRepository.save(any(DiscountCard.class))).thenReturn(discountCard);
-
-        assertEquals(ADD_DISCOUNT_CARD, userService.giveDiscountCard(DISCOUNT, ID).getMessage());
-        assertEquals(DISCOUNT, userEntity.getDiscountCard().getDiscountPercent());
-    }
 }

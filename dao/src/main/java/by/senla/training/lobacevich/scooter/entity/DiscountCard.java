@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -18,7 +19,7 @@ public class DiscountCard {
     @Column(nullable = false)
     private Integer discountPercent;
     @Column
-    private Integer totalSum;
+    private BigDecimal totalSum;
 
     public DiscountCard(Integer discountPercent) {
         this.discountPercent = discountPercent;
